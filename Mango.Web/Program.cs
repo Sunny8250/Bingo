@@ -9,7 +9,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<ICouponService, CouponService>();
+
 SD.CouponApiBaseUrl = builder.Configuration["ServiceUrls:CouponApiBaseUrl"];
+SD.AuthApiBaseUrl = builder.Configuration["ServiceUrls:AuthApiBaseUrl"];
 
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<ICouponService, CouponService>();

@@ -1,7 +1,7 @@
 ﻿using System.Security.AccessControl;
 using static Mango.Web.Utility.SD;
 
-namespace Mango.Web.Models
+namespace Mango.Web.Models.DTO
 {
     public class RequestDTO
     {
