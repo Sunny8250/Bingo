@@ -44,10 +44,10 @@ namespace Mango.Services.AuthApi.Controllers
 			if(ModelState.IsValid)
 			{
 				var loginResponse = await _authService.LoginAsync(loginRequestDTO);
-				if(loginResponse == null)
+				if(loginResponse.User == null)
 				{
 					response.IsSuccess = false;
-					response.Message = "Login unsuccessful";
+					response.Message = "Username or Password is incorrect";
 					return BadRequest(response);
 				}
 				response.Result = loginResponse;
@@ -57,11 +57,11 @@ namespace Mango.Services.AuthApi.Controllers
 
 		[HttpPost]
 		[Route("assignRole")]
-		public async Task<IActionResult> AssignRole([FromBody] AssignRoleDTO registrationRequestDTO)
+		public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDTO assignRoleDTO)
 		{
 			if (ModelState.IsValid)
 			{
-				var roleAsssignSuccessfully = await _authService.AssignRoleAsync(registrationRequestDTO.Email, registrationRequestDTO.Role);
+				var roleAsssignSuccessfully = await _authService.AssignRoleAsync(assignRoleDTO.Email, assignRoleDTO.Role);
 				if (roleAsssignSuccessfully == null)
 				{
 					response.IsSuccess = false;

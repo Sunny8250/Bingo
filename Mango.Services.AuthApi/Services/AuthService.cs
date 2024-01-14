@@ -56,7 +56,8 @@ namespace Mango.Services.AuthApi.Services
 						PhoneNumber = user.PhoneNumber,
 						Name = user.Name
 					};
-					var jwtToken = _jwtTokenGenerator.GenerateToken(user);
+					var roles = await _userManager.GetRolesAsync(user);
+					var jwtToken = _jwtTokenGenerator.GenerateToken(user, roles);
 
 					LoginReponseDTO loginReponse = new LoginReponseDTO()
 					{

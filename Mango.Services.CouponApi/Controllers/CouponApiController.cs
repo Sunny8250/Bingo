@@ -3,6 +3,7 @@ using Mango.Services.CouponApi.CustomActionFilter;
 using Mango.Services.CouponApi.Data;
 using Mango.Services.CouponApi.Models;
 using Mango.Services.CouponApi.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,7 +77,8 @@ namespace Mango.Services.CouponApi.Controllers
         }
         [HttpPost]
         [ValidateModelAttribute]
-        public ResponseDTO Create([FromBody] AddCouponDTO addCouponDTO)
+		[Authorize(Roles="Admin")]
+		public ResponseDTO Create([FromBody] AddCouponDTO addCouponDTO)
         {
             try
             {
@@ -95,7 +97,8 @@ namespace Mango.Services.CouponApi.Controllers
         }
         [HttpPut]
         [ValidateModelAttribute]
-        public ResponseDTO Update([FromBody] UpdateCouponDTO updateCouponDTO)
+		[Authorize(Roles = "Admin")]
+		public ResponseDTO Update([FromBody] UpdateCouponDTO updateCouponDTO)
         {
             try
             {
@@ -115,7 +118,8 @@ namespace Mango.Services.CouponApi.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        public ResponseDTO Delete([FromRoute] int id)
+		[Authorize(Roles = "Admin")]
+		public ResponseDTO Delete([FromRoute] int id)
         {
             try
             {

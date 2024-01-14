@@ -10,11 +10,13 @@ namespace Mango.Web.Service
     public class BaseService : IBaseService
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public BaseService(IHttpClientFactory httpClientFactory)
+        private readonly ITokenProvider _tokenProvider;
+        public BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
         {
             _httpClientFactory = httpClientFactory;
+            _tokenProvider = tokenProvider;
         }
-        public async Task<ResponseDTO?> SendAsync(RequestDTO requestDTO)
+        public async Task<ResponseDTO?> SendAsync(RequestDTO requestDTO, bool isbearer = true)
         {
             try
             {
@@ -22,6 +24,16 @@ namespace Mango.Web.Service
                 HttpRequestMessage message = new();
 
                 message.Headers.Add("Accept", "application/json");
+
+                //token
+                if(isbearer)
+                {
+                    var token = _tokenProvider.GetToken();
+                    message.Headers.Add("Authorization", $"Bearer {token}");
+
+				}
+                
+
                 message.RequestUri = new Uri(requestDTO.Url);
                 if(requestDTO.Data != null)
                 {
@@ -58,6 +70,8 @@ namespace Mango.Web.Service
                         return new() { IsSuccess = false, Message = "Unauthorized" };
                     case HttpStatusCode.InternalServerError:
                         return new() { IsSuccess = false, Message = "Internal Server Error" };
+                    case HttpStatusCode.BadRequest:
+                        return new() { IsSuccess = false, Message = "Bad Request" };
                     default:
                         var apiContent = await apiResponse.Content.ReadAsStringAsync();
                         var apiResponseDto = JsonConvert.DeserializeObject<ResponseDTO>(apiContent);

@@ -40,7 +40,10 @@ namespace Mango.Web.Controllers
                 }
                 else
                 {
-                    TempData["error"] = response.Message;
+                    if (response.Message == "Bad Request")
+                        ViewData["Error"] = "Invalid Input";
+                    else
+                        TempData["error"] = response.Message;
                 }
             }
             return View(couponDTO);
