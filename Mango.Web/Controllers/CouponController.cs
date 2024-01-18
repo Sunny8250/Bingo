@@ -40,16 +40,13 @@ namespace Mango.Web.Controllers
                 }
                 else
                 {
-                    if (response.Message == "Bad Request")
-                        ViewData["Error"] = "Invalid Input";
-                    else
-                        TempData["error"] = response.Message;
+                    TempData["error"] = response.Message;
                 }
             }
             return View(couponDTO);
         }
         
-        public async Task<IActionResult> CouponDelete([FromQuery] int couponID)
+        public async Task<IActionResult> CouponDelete([FromRoute] int couponID)
         {
         
 			var response = await _couponService.GetCouponByIdAsync(couponID);

@@ -16,18 +16,23 @@ namespace Mango.Web.Service
             _httpClientFactory = httpClientFactory;
             _tokenProvider = tokenProvider;
         }
-        public async Task<ResponseDTO?> SendAsync(RequestDTO requestDTO, bool isbearer = true)
+        public async Task<ResponseDTO?> SendAsync(RequestDTO requestDTO, bool withBearer = true)
         {
             try
             {
+                //This line creates an instance of the HttpClient class using a factory
                 HttpClient client = _httpClientFactory.CreateClient("MangoApi");
+                //This line initializes a new instance of the HttpRequestMessage class, which represents an HTTP request.
+                //This object will be configured with various parameters before being sent to the API.
                 HttpRequestMessage message = new();
-
+                //This line adds an "Accept" header to the HTTP request, specifying that the client expects a JSON response from the API.
                 message.Headers.Add("Accept", "application/json");
 
                 //token
-                if(isbearer)
+                if(withBearer)
                 {
+                    //Adds an "Authorization" header with a Bearer token obtained from _tokenProvider.
+                    //Bearer tokens are commonly used for authentication in API requests.
                     var token = _tokenProvider.GetToken();
                     message.Headers.Add("Authorization", $"Bearer {token}");
 
