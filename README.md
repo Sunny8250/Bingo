@@ -16,6 +16,8 @@ micro services and web app for UI, in which we will show how web app and web api
 
 Add Authentication and Authroization using Jwt token for token exchange to access resources based on role.
 Add cookies to save the tocken for certain period of time for a user to validate user is still signed in.
+Add Authentication and Authroization to accept token in swagger based on role to access on particular resource based on roles.
+
 
 
 
