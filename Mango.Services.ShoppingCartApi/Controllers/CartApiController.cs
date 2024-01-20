@@ -3,6 +3,7 @@ using Mango.Services.ProductApi.Data;
 using Mango.Services.ShoppingCartApi.Models;
 using Mango.Services.ShoppingCartApi.Models.DTO;
 using Mango.Services.ShoppingCartApi.Services.IService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -120,7 +121,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             return _responseDTO;
         }
 
-        [HttpPost("RemoveCart/{id:int}")]
+        [HttpPost("RemoveCart/{cartDetailsId:int}")]
         public async Task<ResponseDTO> RemoveCart([FromRoute]int cartDetailsId)
         {
             try

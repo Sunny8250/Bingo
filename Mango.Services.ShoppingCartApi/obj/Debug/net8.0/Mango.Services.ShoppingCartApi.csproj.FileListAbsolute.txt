@@ -35,6 +35,7 @@ C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -138,4 +139,3 @@ C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0\Mango.Services.ShoppingCartApi.pdb
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0\Mango.Services.ShoppingCartApi.genruntimeconfig.cache
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0\ref\Mango.Services.ShoppingCartApi.dll
-C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Newtonsoft.Json.dll
