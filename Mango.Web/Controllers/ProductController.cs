@@ -45,10 +45,10 @@ namespace Mango.Web.Controllers
             return View(productDTO);
         }
 
-        public async Task<IActionResult> ProductDelete([FromRoute]int productID)
+        public async Task<IActionResult> ProductDelete(int productId)
         {
 
-            var response = await _productService.GetProductByIdAsync(productID);
+            var response = await _productService.GetProductByIdAsync(productId);
             if (response != null && response.IsSuccess)
             {
                 ProductDTO? model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));
@@ -77,10 +77,10 @@ namespace Mango.Web.Controllers
             return View(productDTO);
         }
 
-        public async Task<IActionResult> ProductEdit([FromRoute]int productID)
+        public async Task<IActionResult> ProductEdit(int productId)
         {
 
-            var response = await _productService.GetProductByIdAsync(productID);
+            var response = await _productService.GetProductByIdAsync(productId);
             if (response != null && response.IsSuccess)
             {
                 ProductDTO? model = JsonConvert.DeserializeObject<ProductDTO>(Convert.ToString(response.Result));

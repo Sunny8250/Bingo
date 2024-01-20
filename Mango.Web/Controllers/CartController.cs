@@ -46,24 +46,13 @@ namespace Mango.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ApplyCoupon(CartDTO cartDTO)
         {
-            ResponseDTO? responseDTO = await _cartService.ApplyCouponAsync(cartDTO);
-            if (responseDTO != null && responseDTO.IsSuccess)
+            ResponseDTO? response = await _cartService.ApplyCouponAsync(cartDTO);
+            if (response != null & response.IsSuccess)
             {
-                if(!string.IsNullOrWhiteSpace(cartDTO.CartHeader.CouponCode))
-                {
-                    var cartResponse = await _cartService.GetCartByUserIdAsync(cartDTO.CartHeader.UserID);
-                    if(cartResponse!=null && cartResponse.IsSuccess)
-                    {
-                        cartDTO = JsonConvert.DeserializeObject<CartDTO>(Convert.ToString(cartResponse.Result));
-                        TempData["success"] = "Coupon applied";
-                    }
-                    else
-                    {
-                        TempData["error"] = "Invalid Coupon";
-                    }
-                }
+                TempData["success"] = "Cart updated successfully";
+                return RedirectToAction(nameof(CartIndex));
             }
-            return RedirectToAction(nameof(CartIndex));
+            return View();
         }
     }
 }

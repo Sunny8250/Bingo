@@ -50,7 +50,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
                 if(!string.IsNullOrWhiteSpace(cart.CartHeader.CouponCode))
                 {
                     var coupon = await _couponService.GetCouponByCodeAsync(cart.CartHeader.CouponCode);
-                    if(coupon!= null && cart.CartHeader.CartTotal > coupon.MinAmount)
+                    if(coupon!= null && cart.CartHeader.CartTotal >= coupon.MinAmount)
                     {
                         cart.CartHeader.CartTotal -= coupon.DiscountAmount;
                         cart.CartHeader.Discount = coupon.DiscountAmount;
@@ -150,7 +150,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             }
             return _responseDTO;
         }
-        //CrossCheck once whether it is required or not
+
         [HttpPost("ApplyCoupon")]
         public async Task<ResponseDTO> ApplyCoupon([FromBody] CartDTO cartDTO)
         {

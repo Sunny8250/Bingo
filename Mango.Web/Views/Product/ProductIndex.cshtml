@@ -1,4 +1,5 @@
 ﻿@using Mango.Web.Models.DTO
+@using System.Globalization
 
 @model IEnumerable<ProductDTO>
 
@@ -16,7 +17,6 @@
 			</div>
 			<div class="col-6 text-end">
 				<a asp-action="ProductCreate" asp-controller="Product" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create New Product</a>
-
 			</div>
 		</div>
 		<table class="table">
@@ -44,7 +44,7 @@
 							@item.CategoryName
 						</td>
 						<td>
-							(@item.Price.ToString("c"))
+							(@string.Format(new CultureInfo("hi-IN"), "{0:c}", item.Price))
 						</td>
 						<td>
 							<a asp-action="ProductEdit" asp-route-productId = "@item.ProductID" class="btn btn-success" >
