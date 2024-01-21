@@ -139,3 +139,8 @@ C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0\Mango.Services.ShoppingCartApi.pdb
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0\Mango.Services.ShoppingCartApi.genruntimeconfig.cache
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\obj\Debug\net8.0\ref\Mango.Services.ShoppingCartApi.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Azure.Core.Amqp.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Azure.Messaging.ServiceBus.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Microsoft.Azure.Amqp.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Mango.MessageBus.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ShoppingCartApi\bin\Debug\net8.0\Mango.MessageBus.pdb
