@@ -10,7 +10,7 @@ namespace Mango.MessageBus
 {
     public class MessageBus : IMessageBus
     {
-        //its is the address to the Azure ServiceBus connection path
+        //It is the address to the Azure ServiceBus connection path
         private string serviceBusConnectionString = "Endpoint=sb://bingoweb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ohBEEdfU9fKqH+5TBhqYPw6pAMVr0FKxM+ASbJdHIzs=";
         public async Task PublishMessage(object message, string topic_queue_name)
         {

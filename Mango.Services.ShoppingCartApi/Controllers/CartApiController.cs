@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Mango.MessageBus;
-using Mango.Services.ProductApi.Data;
+using Mango.Services.ShoppingCartApi.Data;
 using Mango.Services.ShoppingCartApi.Models;
 using Mango.Services.ShoppingCartApi.Models.DTO;
 using Mango.Services.ShoppingCartApi.Services.IService;
@@ -182,7 +182,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
         {
             try
             {
-                var queueName = _configuration.GetValue<string>("TopicAndQueueName:EmailShoppingCart");
+                var queueName = _configuration.GetValue<string>("TopicAndQueueName:EmailShoppingCartQueue");
                 await _messageBus.PublishMessage(cartDTO, queueName);
                 _responseDTO.Result = true;
             }

@@ -11,7 +11,6 @@ namespace Mango.Services.CouponApi.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
-    [Authorize]
     public class CouponApiController : ControllerBase
     {
         private readonly AppDbContext _dbContext;
@@ -86,7 +85,17 @@ namespace Mango.Services.CouponApi.Controllers
                 var coupon = _mapper.Map<Coupon>(addCouponDTO);
                 _dbContext.Coupons.Add(coupon);
                 _dbContext.SaveChanges();
-                
+
+                var options = new Stripe.CouponCreateOptions
+                {
+                    AmountOff = (long)(addCouponDTO.DiscountAmount * 100),
+                    Name = addCouponDTO.CouponCode,
+                    Currency = "INR",
+                    Id = addCouponDTO.CouponCode
+                };
+                var service = new Stripe.CouponService();
+                service.Create(options); //creates a coupon service
+
                 _response.Result = _mapper.Map<CouponDTO>(coupon);
             }
             catch (Exception ex)
@@ -106,8 +115,17 @@ namespace Mango.Services.CouponApi.Controllers
                 var coupon = _mapper.Map<Coupon>(updateCouponDTO);
                 _dbContext.Coupons.Update(coupon);
                 _dbContext.SaveChanges();
-                
-                _response.Result = _mapper.Map<CouponDTO>(coupon);
+
+                var couponDTO = _mapper.Map<CouponDTO>(coupon);
+                //TODO
+    //            var options = new Stripe.CouponUpdateOptions
+    //            {
+				//	Name = updateCouponDTO.CouponCode
+				//};
+				//var service = new Stripe.CouponService();
+				//service.Update(couponDTO.CouponCode, options);
+
+                _response.Result = couponDTO;
             }
             catch (Exception ex)
             {
@@ -128,6 +146,10 @@ namespace Mango.Services.CouponApi.Controllers
                 _dbContext.Coupons.Remove(coupon);
                 _dbContext.SaveChanges();
                 var couponDTO = _mapper.Map<CouponDTO>(coupon);
+
+                var service = new Stripe.CouponService();
+                service.Delete(couponDTO.CouponCode);
+
                 _response.Result = couponDTO;
             }
             catch (Exception ex)

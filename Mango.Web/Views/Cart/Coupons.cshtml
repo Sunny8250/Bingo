@@ -1,0 +1,27 @@
+﻿@using Mango.Web.Models.DTO
+@model CartDTO
+@{
+    var coupons = ViewBag.Coupons;
+}
+
+<div class="container mt-5">
+<form asp-action="ApplyCoupon" asp-controller="Cart" method="post">
+    <!-- Hidden input to send the CartDTO data back to the controller -->
+    <input asp-for="@Model.CartHeader.UserID" hidden />
+    <input asp-for="@Model.CartHeader.CartHeaderID" hidden />
+    <!-- Your coupon list display -->
+    @foreach (var couponDTO in coupons)
+    {
+        <div class="row border-bottom">
+            <div class="col-10 ml-auto">
+                <h3>@couponDTO.CouponCode</h3>
+                <p>Get @couponDTO.CouponCode on order above @couponDTO.MinAmount. Click to Apply!</p>
+            </div>
+            <div class="col-2 pt-4 pl-4">
+                <!-- Pass coupon code as parameter -->
+                <button type="submit" class="btn btn-success" @(Model.CartHeader.CartTotal < couponDTO.MinAmount? "disabled": "") name="couponCode" value="@couponDTO.CouponCode">Apply</button>
+            </div>
+        </div>
+    }
+</form>
+</div>

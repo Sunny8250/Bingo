@@ -1,4 +1,5 @@
-﻿using Mango.Services.AuthApi.Models.DTO;
+﻿using Mango.MessageBus;
+using Mango.Services.AuthApi.Models.DTO;
 using Mango.Services.AuthApi.Services.IService;
 using Mango.Services.CouponApi.Models.DTO;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,14 @@ namespace Mango.Services.AuthApi.Controllers
 	{
 		private readonly IAuthService _authService;
 		private ResponseDTO response;
-        public AuthApiController(IAuthService authService)
+		private readonly IMessageBus _messageBus;
+		private readonly IConfiguration _configuration;
+        public AuthApiController(IAuthService authService, IMessageBus messageBus, IConfiguration configuration)
         {
 			_authService = authService;
 			response = new ResponseDTO();
+			_messageBus = messageBus;
+			_configuration = configuration;
         }
         [HttpPost]
 		[Route("register")]
@@ -31,7 +36,9 @@ namespace Mango.Services.AuthApi.Controllers
 
 					return BadRequest();
 				}
-			}
+                var queueName = _configuration.GetValue<string>("TopicAndQueueName:EmailAuthQueue");
+                await _messageBus.PublishMessage(registrationRequestDTO.Email, queueName);
+            }
 			return Ok(response);
 			
 			

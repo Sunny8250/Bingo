@@ -47,9 +47,12 @@
 							(@string.Format(new CultureInfo("hi-IN"), "{0:c}", item.MinAmount))
 					</td>
 					<td>
-							<a asp-action="CouponDelete" asp-route-CouponID="@item.CouponID" class="btn btn-danger">
+						<a asp-action="UpdateCoupon" asp-route-CouponID="@item.CouponID" class="btn btn-secondary">
+							<i class="bi bi-pencil"></i>
+						</a>
+						<a asp-action="CouponDelete" asp-route-CouponID="@item.CouponID" class="btn btn-danger">
 							<i class="bi bi-trash"></i>
-							</a>
+						</a>
 					</td>
 				</tr>
 				}

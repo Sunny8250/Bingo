@@ -1,5 +1,5 @@
 using Mango.MessageBus;
-using Mango.Services.ProductApi.Data;
+using Mango.Services.ShoppingCartApi.Data;
 using Mango.Services.ShoppingCartApi;
 using Mango.Services.ShoppingCartApi.Extensions;
 using Mango.Services.ShoppingCartApi.Models.DTO;

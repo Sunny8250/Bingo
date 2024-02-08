@@ -60,6 +60,11 @@
                         </div>
                     }
                     <hr />
+                    <div>
+                        <a class="btn btn-sm btn-outline-info ml-3" asp-action="Coupons" asp-route-userId="@Model.CartHeader.UserID">View All Coupons</a>
+                    </div>
+                    
+                    <br />
                     <div class="row">
                         <div class="col-6">
                             @if (string.IsNullOrWhiteSpace(Model.CartHeader.CouponCode))
@@ -89,7 +94,7 @@
                         <button type="submit" class="btn btn-outline-danger form-control">Email Cart</button>
                     </div>
                     <div class="col-6 col-md-3 offset-md-6">
-                        <button disabled class="btn btn-success form-control " value="Checkout">Checkout (Comming Soon!)</button>
+                        <a asp-action="Checkout" class="btn btn-success form-control " value="Checkout">Checkout</a>
                     </div>
                 </div>
             </div>

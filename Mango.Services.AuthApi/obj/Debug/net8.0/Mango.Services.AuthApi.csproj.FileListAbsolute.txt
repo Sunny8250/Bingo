@@ -139,3 +139,9 @@ C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\obj\Debug\net8.0\refint\
 C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\obj\Debug\net8.0\Mango.Services.AuthApi.pdb
 C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\obj\Debug\net8.0\Mango.Services.AuthApi.genruntimeconfig.cache
 C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\obj\Debug\net8.0\ref\Mango.Services.AuthApi.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\bin\Debug\net8.0\Azure.Core.Amqp.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\bin\Debug\net8.0\Azure.Messaging.ServiceBus.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\bin\Debug\net8.0\Microsoft.Azure.Amqp.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\bin\Debug\net8.0\Mango.MessageBus.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.AuthApi\bin\Debug\net8.0\Mango.MessageBus.pdb
