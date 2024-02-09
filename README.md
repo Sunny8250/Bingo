@@ -5,9 +5,26 @@
 
 Pre Requisite
 
-Visual Studio 2022
-Sql Server
-Postman(Optional)
+**Technology**
+ASP.NET Core
+
+**Language**
+C#
+
+**Markup Language & Styling**
+Html5, Css, Bootstrap
+
+**Database**
+SQL Server
+
+**Tools**
+Visual Studio 2022, Postman(Optional)
+
+**Version Control**
+Github
+
+**Other 3rd party services required**
+Azure Service, Stripe
 
 
 Note:- Basic understanding on c# and .NET Core framework is required.
@@ -23,6 +40,13 @@ micro services and web app for UI, in which we will show how web app and web api
 **MicroServices Application Flow Diagram**
 
 ![Image Alt Text](./images/Architecture.jpg)
+
+
+_Till now implemented_ total 5 micro services and a web app on which i have used ASP.NET MVC pattern.
+For Front End i have used basic Html, css, bootstrap and some asp.net html attributes to create the view pages.
+and For Back End i am using .NET Core Framework.
+Every Microservices is assigned with some specific port which will be used during accessing resources for the services through url with the port no.
+Dashed Line shows synchronous communication whereas dotted line shows asynchronous communication.
 
 Added **Authentication and Authroization** using Jwt token for token exchange to access resources based on role.
 Added **cookies** to save the token for certain period of time for a user to validate user is still signed in.
