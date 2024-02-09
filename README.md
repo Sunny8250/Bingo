@@ -1,5 +1,8 @@
 **.NET Core MicroServices**
 
+![Image Alt Text](./images/MicroService-updated.jpeg)
+
+
 Pre Requisite
 
 Visual Studio 2022
@@ -16,6 +19,11 @@ Note:- Basic understanding on c# and .NET Core framework is required.
 In this Project our main intention is to break down monolithic application to small micro services, So that project should be easily maintainable and testable and scalable. For that we have used some web api's which will be our
 micro services and web app for UI, in which we will show how web app and web api's are communicating with each other.
 
+
+**MicroServices Application Flow Diagram**
+
+![Image Alt Text](./images/Architecture.jpg)
+
 Added **Authentication and Authroization** using Jwt token for token exchange to access resources based on role.
 Added **cookies** to save the token for certain period of time for a user to validate user is still signed in.
 Authentication and Authroization to accept token in swagger based on role to access on particular resource.
@@ -23,7 +31,8 @@ Authentication and Authroization to accept token in swagger based on role to acc
 Added **Azure Message Service** for asynchornous Communication between services.
 Added **Stripe** Session for Payments.
 
-![Image Alt Text](./images/MicroService-updated.jpeg)
+
+
 
 
 
