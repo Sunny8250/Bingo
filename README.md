@@ -23,7 +23,7 @@ Authentication and Authroization to accept token in swagger based on role to acc
 Added **Azure Message Service** for asynchornous Communication between services.
 Added **Stripe** Session for Payments.
 
-![Image Alt Text](./images/MicroService.jpeg)
+![Image Alt Text](./images/MicroService-updated.jpeg)
 
 
 
