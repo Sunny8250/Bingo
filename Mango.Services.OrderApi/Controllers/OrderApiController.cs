@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mango.MessageBus;
 using Mango.Services.OrderApi.Data;
 using Mango.Services.OrderApi.Models;
 using Mango.Services.OrderApi.Models.DTO;
@@ -21,13 +22,18 @@ namespace Mango.Services.OrderApi.Controllers
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
         private readonly AppDbContext _dbContext;
+        private readonly IMessageBus _messageBus;
+        private readonly IConfiguration _configuration;
 
-        public OrderApiController(IProductService productService, IMapper mapper, AppDbContext dbContext)
+        public OrderApiController(IProductService productService, IMapper mapper, AppDbContext dbContext,
+            IMessageBus messageBus, IConfiguration configuration)
         {
             _responseDTO = new ResponseDTO();
             _productService = productService;
             _mapper = mapper;
             _dbContext = dbContext;
+            _configuration = configuration;
+            _messageBus = messageBus;
         }
         [Authorize]
         [HttpPost("CreateOrder")]
@@ -118,12 +124,21 @@ namespace Mango.Services.OrderApi.Controllers
                 var paymentIntentService = new PaymentIntentService();
                 PaymentIntent paymentIntent = paymentIntentService.Get(session.PaymentIntentId);
 
-                if(paymentIntent.Status == "succeeded")
+                if (paymentIntent.Status == "succeeded")
                 {
                     //than payment was succesful
                     orderHeader.PaymentIntentID = paymentIntent.Id;
                     orderHeader.Status = SD.Status_Approved;
                     await _dbContext.SaveChangesAsync();
+                    //Publish reward message and send it to topic where subscriptions will catch the same message 
+                    RewardsDTO rewardsDTO = new RewardsDTO
+                    {
+                        UserID = orderHeader.UserID,
+                        RewardsActivity = Convert.ToInt32(orderHeader.OrderTotal),
+                        OrderId = orderHeaderId
+                    };
+                    var topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
+                    await _messageBus.PublishMessage(rewardsDTO, topicName);
                     _responseDTO.Result = _mapper.Map<OrderHeaderDTO>(orderHeader);
                 };
             }

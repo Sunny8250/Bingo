@@ -1,4 +1,5 @@
 ﻿using Azure.Messaging.ServiceBus;
+using Mango.Services.EmailApi.Message;
 using Mango.Services.EmailApi.Models.DTO;
 using Mango.Services.EmailApi.Services;
 using Newtonsoft.Json;
@@ -9,47 +10,60 @@ namespace Mango.Services.EmailApi.Messaging
     public class AzureServiceBusConsumer: IAzureServiceBusConsumer
     {
         private readonly IConfiguration _configuration;
-        private readonly string _emailCartQueue;
-        private readonly string _emailAuthQueue;
-        private readonly string _serviceBusConnectionstring;
-        private ServiceBusProcessor _emailCartProcessor;
-        private ServiceBusProcessor _emailAuthProcessor;
+        private readonly string emailCartQueue;
+        private readonly string emailAuthQueue;
+        private readonly string orderCreatedTopic;
+        private readonly string orderCreatedEmailSubscription;
+        private readonly string serviceBusConnectionstring;
+        private ServiceBusProcessor emailCartProcessor;
+        private ServiceBusProcessor emailAuthProcessor;
+        private ServiceBusProcessor emailProcessor;
         private readonly EmailService _emailService;
         public AzureServiceBusConsumer(IConfiguration configuration, EmailService emailService)
         {
             _configuration = configuration;
-            _serviceBusConnectionstring = configuration.GetValue<string>("ServiceBusConnectionString");
-            _emailCartQueue = configuration.GetValue<string>("TopicAndQueueName:EmailShoppingCartQueue");
-            _emailAuthQueue = configuration.GetValue<string>("TopicAndQueueName:EmailAuthQueue");
+            serviceBusConnectionstring = configuration.GetValue<string>("ServiceBusConnectionString");
+            emailCartQueue = configuration.GetValue<string>("TopicAndQueueName:EmailShoppingCartQueue");
+            emailAuthQueue = configuration.GetValue<string>("TopicAndQueueName:EmailAuthQueue");
+            orderCreatedTopic = configuration.GetValue<string>("TopicAndQueueName:OrderCreatedTopic");
+            orderCreatedEmailSubscription = configuration.GetValue<string>("TopicAndQueueName:OrderCreatedEmailSubscription");
             _emailService = emailService;
 
-            var client = new ServiceBusClient(_serviceBusConnectionstring);
+            var client = new ServiceBusClient(serviceBusConnectionstring);
             //Creates instance can be used to process messages using event handler that are set in the processor 
             //as per event and delegate we can say that here CreateProcessor is the instance of the publisher event class
             //where subscriber is subscribing by assigning with subscriber handler
-            _emailCartProcessor = client.CreateProcessor(_emailCartQueue);
-            _emailAuthProcessor = client.CreateProcessor(_emailAuthQueue);
+            emailCartProcessor = client.CreateProcessor(emailCartQueue);
+            emailAuthProcessor = client.CreateProcessor(emailAuthQueue);
+            emailProcessor = client.CreateProcessor(orderCreatedTopic, orderCreatedEmailSubscription);
         }
 
         public async Task Start()
         {
-            _emailCartProcessor.ProcessMessageAsync += OnEmailCartRequestReceived; //(event handler/ subscriber handler subscribed to event)
-            _emailCartProcessor.ProcessErrorAsync += ErrorHandler;
-            await _emailCartProcessor.StartProcessingAsync();
+            emailCartProcessor.ProcessMessageAsync += OnEmailCartRequestReceived; //(event handler/ subscriber handler subscribed to event)
+            emailCartProcessor.ProcessErrorAsync += ErrorHandler;
+            await emailCartProcessor.StartProcessingAsync();
 
-            _emailAuthProcessor.ProcessMessageAsync += OnRegistrationRequestReceived;
-            _emailAuthProcessor.ProcessErrorAsync += ErrorHandler;
-            await _emailAuthProcessor.StartProcessingAsync();
-        }
+            emailAuthProcessor.ProcessMessageAsync += OnRegistrationRequestReceived;
+            emailAuthProcessor.ProcessErrorAsync += ErrorHandler;
+            await emailAuthProcessor.StartProcessingAsync();
+
+            emailProcessor.ProcessMessageAsync += OnNewOrderPlacedEmailRequestReceived;
+            emailProcessor.ProcessErrorAsync += ErrorHandler;
+			await emailProcessor.StartProcessingAsync();
+		}
 
         public async Task Stop()
         {
-            await _emailCartProcessor.StopProcessingAsync();
-            await _emailCartProcessor.DisposeAsync();
+            await emailCartProcessor.StopProcessingAsync();
+            await emailCartProcessor.DisposeAsync();
 
-            await _emailAuthProcessor.StopProcessingAsync();
-            await _emailAuthProcessor.DisposeAsync();
-        }
+            await emailAuthProcessor.StopProcessingAsync();
+            await emailAuthProcessor.DisposeAsync();
+
+			await emailProcessor.StopProcessingAsync();
+			await emailProcessor.DisposeAsync();
+		}
 
         private Task ErrorHandler(ProcessErrorEventArgs args)
         {
@@ -87,5 +101,20 @@ namespace Mango.Services.EmailApi.Messaging
                 throw;
             }
         }
-    }
+		private async Task OnNewOrderPlacedEmailRequestReceived(ProcessMessageEventArgs args)
+		{
+			var message = args.Message;
+			var body = Encoding.UTF8.GetString(message.Body);
+			OrderConfirmation orderConfirmation = JsonConvert.DeserializeObject<OrderConfirmation>(body);
+			try
+			{
+				await _emailService.EmailAndLogOrderPlaced(orderConfirmation);
+				await args.CompleteMessageAsync(message); // Tell the queue that message has been proccessed now can be deleted.
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+	}
 }

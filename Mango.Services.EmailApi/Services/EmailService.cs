@@ -1,4 +1,5 @@
 ﻿using Mango.Services.EmailApi.Data;
+using Mango.Services.EmailApi.Message;
 using Mango.Services.EmailApi.Models;
 using Mango.Services.EmailApi.Models.DTO;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,18 @@ namespace Mango.Services.EmailApi.Services
             _dbOptions = dbOptions;
         }
 
-        //We cannot use registered DbContext here because dbContext is Scoped and EmailService is singleton, so to resolve this
-        //we should create a another dbcontext where it will be singleton
+		public async Task EmailAndLogOrderPlaced(OrderConfirmation orderConfirmation)
+		{
+			string message = $"<br/>New Order Placed <br/>OrderId: {orderConfirmation.OrderId} <br/>";
+
+			await LogAndEmail(orderConfirmation.ToString(), "ajoyr118@gmail.com");
+		}
+
+		//We cannot use registered DbContext here because dbContext is Scoped and EmailService is singleton, so to resolve this
+		//we should create a another dbcontext where it will be singleton
 
 
-        public async Task EmailCartAndLog(CartDTO cartDTO)
+		public async Task EmailCartAndLog(CartDTO cartDTO)
         {
             StringBuilder message = new StringBuilder();
             message.AppendLine("<br/>Cart Email Requested ");
@@ -53,8 +61,8 @@ namespace Mango.Services.EmailApi.Services
                 };
                 await using (var dbContext = new AppDbContext(_dbOptions))
                 {
-                    dbContext.EmailLoggers.Add(emailLogger);
-                    dbContext.SaveChanges();
+                    await dbContext.EmailLoggers.AddAsync(emailLogger);
+                    await dbContext.SaveChangesAsync();
                     await dbContext.DisposeAsync();
                     return true;
                 }
