@@ -5,25 +5,25 @@
 
 Pre Requisite
 
-**Technology**
+**Technology** - 
 ASP.NET Core
 
-**Language**
+**Language** - 
 C#
 
-**Markup Language & Styling**
+**Markup Language & Styling** - 
 Html5, Css, Bootstrap
 
-**Database**
+**Database** - 
 SQL Server
 
-**Tools**
+**Tools** - 
 Visual Studio 2022, Postman(Optional)
 
-**Version Control**
+**Version Control** - 
 Github
 
-**Other 3rd party services required**
+**Other 3rd party services required** - 
 Azure Service, Stripe
 
 
