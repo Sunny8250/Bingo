@@ -7,6 +7,7 @@ using Mango.Services.ShoppingCartApi.Services.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.PortableExecutable;
 
@@ -193,5 +194,26 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             }
             return _responseDTO;
         }
+
+        //TODO
+        //[HttpGet("GetCartItemsCount/{userId}")]
+        //public async Task<ResponseDTO> GetCartItemsCount(string userId)
+        //{
+        //    try
+        //    {
+        //        int count = await _dbContext.CartDetails
+        //        .FromSqlRaw("EXECUTE GetCartItemsCount @userId",
+        //        new SqlParameter("@userId", userId))
+        //        .AsNoTracking()
+        //        .CountAsync();
+        //        _responseDTO.Result = count;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        _responseDTO.Message = ex.Message.ToString();
+        //        _responseDTO.IsSuccess = false;
+        //    }
+        //    return _responseDTO;
+        //}
     }
 }

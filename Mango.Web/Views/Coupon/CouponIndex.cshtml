@@ -2,6 +2,22 @@
 @using System.Globalization
 @model IEnumerable<CouponDTO>
 
+@* <style>
+	.normal-user-header-style {
+		padding-left: 100px;
+	}
+	.normal-user-row-style {
+		padding-left: 100px;
+	}
+</style> *@
+
+@* <link rel="stylesheet" href="~/css/custom.css" /> *@
+
+@{
+	var isAdmin = User.Claims.FirstOrDefault(x => x.Type.Contains("role")).Value == "Admin" ? true : false;
+	// string thCssClass = !isAdmin ? "normal-user-header-style" : "admin-header-style";
+	// string tdCssClass = !isAdmin ? "normal-user-row-style": "admin-row-style";
+}
 <div class="card shadow border-0 mt-5">
 	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
 		<div class="row">
@@ -15,8 +31,10 @@
 			<div class="col-6">
 			</div>
 			<div class="col-6 text-end">
-				<a asp-controller="Coupon" asp-action="CouponCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create New Coupon</a>
-
+				@if (isAdmin)
+				{
+					<a asp-controller="Coupon" asp-action="CouponCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create New Coupon</a>
+				}
 			</div>
 		</div>
 		<table class="table">
@@ -31,14 +49,18 @@
 					<th>
 						Minimum Amount
 					</th>
-					<th></th>
+					@if (isAdmin)
+					{
+						<th></th>
+					}
 				</tr>
 			</thead>
 			<tbody>
 				@foreach(var item in Model)
 				{
 				<tr>
-					<td>@item.CouponCode
+					<td>
+						@item.CouponCode
 					</td>
 					<td>
 							(@string.Format(new CultureInfo("hi-IN"), "{0:c}", item.DiscountAmount))
@@ -46,14 +68,17 @@
 					<td>
 							(@string.Format(new CultureInfo("hi-IN"), "{0:c}", item.MinAmount))
 					</td>
-					<td>
-						<a asp-action="UpdateCoupon" asp-route-CouponID="@item.CouponID" class="btn btn-secondary">
-							<i class="bi bi-pencil"></i>
-						</a>
-						<a asp-action="CouponDelete" asp-route-CouponID="@item.CouponID" class="btn btn-danger">
-							<i class="bi bi-trash"></i>
-						</a>
-					</td>
+					@if (isAdmin)
+					{
+						<td>
+							<a asp-action="UpdateCoupon" asp-route-CouponID="@item.CouponID" class="btn btn-secondary">
+								<i class="bi bi-pencil"></i>
+							</a>
+							<a asp-action="CouponDelete" asp-route-CouponID="@item.CouponID" class="btn btn-danger">
+								<i class="bi bi-trash"></i>
+							</a>
+						</td>
+					}
 				</tr>
 				}
 			</tbody>

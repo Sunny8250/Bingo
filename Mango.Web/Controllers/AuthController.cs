@@ -91,7 +91,9 @@ namespace Mango.Web.Controllers
                 new SelectListItem(){Text=SD.CustomerRole, Value = SD.CustomerRole}
             };
             ViewBag.RoleList = RoleList;
-            return View(registrationRequestDTO);
+            if (TempData["error"] != null)
+                return View(registrationRequestDTO);
+            return RedirectToAction(nameof(Login));
         }
 
         public async Task<IActionResult> Logout()

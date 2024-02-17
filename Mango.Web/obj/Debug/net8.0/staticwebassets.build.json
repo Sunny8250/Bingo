@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PRfy2EbSLu6JsnEHPmAf5DOq+u/9vWZQjSt/Zwp1rI8=",
+  "Hash": "eKfLhz3vUuxKdItCASvldPJCq8aO9V5i99qzsPkszuw=",
   "Source": "Mango.Web",
   "BasePath": "_content/Mango.Web",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Mango.Web.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\css\\custom.css",
+      "SourceId": "Mango.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\",
+      "BasePath": "_content/Mango.Web",
+      "RelativePath": "css/custom.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\custom.css"
     },
     {
       "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\css\\site.css",
@@ -129,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\order.PNG"
+    },
+    {
+      "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\order.js",
+      "SourceId": "Mango.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\",
+      "BasePath": "_content/Mango.Web",
+      "RelativePath": "js/order.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\order.js"
     },
     {
       "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\site.js",

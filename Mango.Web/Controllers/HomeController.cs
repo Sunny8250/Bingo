@@ -30,6 +30,7 @@ namespace Mango.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 productDTOs = JsonConvert.DeserializeObject<List<ProductDTO>>(Convert.ToString(response.Result));
+                ViewBag.Count = productDTOs.Count();
             }
             else
             {

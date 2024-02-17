@@ -58,5 +58,14 @@ namespace Mango.Web.Service
                 Data = cartDetailsId
             });
         }
+
+        public async Task<ResponseDTO?> GetCartItemsCountAsync(string userId)
+        {
+            return await _baseService.SendAsync(new RequestDTO()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.ShoppingCartApiBaseUrl + "/api/cart/GetCartItemsCount/" + userId
+            });
+        }
     }
 }

@@ -9,7 +9,8 @@ namespace Mango.Services.OrderApi
         public AutoMapperProfile()
         {
             CreateMap<OrderHeaderDTO, CartHeaderDTO>().ForMember(dest => dest.CartTotal, u=> u.MapFrom(src => src.OrderTotal)).ReverseMap();
-            CreateMap<CartDetailsDTO, OrderDetailsDTO>().ForMember(dest => dest.ProductName, u => u.MapFrom(src => src.Product.Name));
+            CreateMap<CartDetailsDTO, OrderDetailsDTO>().ForMember(dest => dest.ProductName, u => u.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.Price, u => u.MapFrom(src => src.Product.Price));
             CreateMap<OrderDetailsDTO, CartDetailsDTO>();
             CreateMap<OrderHeader, OrderHeaderDTO>().ReverseMap();
             CreateMap<OrderDetails, OrderDetailsDTO>().ReverseMap();

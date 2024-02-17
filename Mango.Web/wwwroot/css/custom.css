@@ -1,0 +1,16 @@
+﻿.admin-header-style {
+    /* Styles for table headers for admin users */
+    
+}
+
+.normal-user-header-style {
+    padding-left: 100px;
+}
+
+.admin-row-style {
+    
+}
+
+.normal-user-row-style {
+    padding-left: 100px;
+}

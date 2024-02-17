@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using Mango.MessageBus;
 using Mango.Services.OrderApi.Data;
 using Mango.Services.OrderApi.Models;
@@ -61,6 +62,7 @@ namespace Mango.Services.OrderApi.Controllers
             }
             return _responseDTO;
         }
+
         [Authorize]
         [HttpPost("CreateStripeSession")]
         public async Task<ResponseDTO> CreateStripeSession([FromBody] StripeRequestDTO stripeRequestDTO)
@@ -111,6 +113,7 @@ namespace Mango.Services.OrderApi.Controllers
             }
             return _responseDTO;
         }
+
         [Authorize]
         [HttpPost("ValidateStripeSession")]
         public async Task<ResponseDTO> ValidateStripeSession([FromBody]int orderHeaderId)
@@ -135,7 +138,8 @@ namespace Mango.Services.OrderApi.Controllers
                     {
                         UserID = orderHeader.UserID,
                         RewardsActivity = Convert.ToInt32(orderHeader.OrderTotal),
-                        OrderId = orderHeaderId
+                        OrderId = orderHeaderId,
+                        Email = orderHeader.Email
                     };
                     var topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
                     await _messageBus.PublishMessage(rewardsDTO, topicName);
@@ -149,5 +153,82 @@ namespace Mango.Services.OrderApi.Controllers
             }
             return _responseDTO;
         }
+
+        [Authorize]
+        [HttpGet("GetOrder/{id:int}")]
+        public async Task<ResponseDTO?> GetOrder(int id)
+        {
+            try
+            {
+                OrderHeader orderHeader = _dbContext.OrderHeaders.Include(u => u.OrderDetails).First(x => x.OrderHeaderID == id);
+                _responseDTO.Result = _mapper.Map<OrderHeaderDTO>(orderHeader);
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.IsSuccess = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
+
+        [Authorize]
+        [HttpGet("GetOrders/{userId?}")]
+        public async Task<ResponseDTO?> Get(string? userId="")
+        {
+            try
+            {
+                IEnumerable<OrderHeader> objList;
+                //Get all orders when user is admin
+                if (User.IsInRole(SD.RoleAdmin))
+                {
+                    objList = _dbContext.OrderHeaders.Include(x => x.OrderDetails).OrderByDescending(x => x.OrderHeaderID).ToList();
+                }
+                //Get all Orders for the userId
+                else
+                {
+                    objList = _dbContext.OrderHeaders.Include(x => x.OrderDetails).Where(x => x.UserID == userId)
+                        .OrderByDescending(x => x.OrderHeaderID).ToList();
+                }
+                _responseDTO.Result = _mapper.Map<IEnumerable<OrderHeaderDTO>>(objList);
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.IsSuccess = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
+
+        [Authorize]
+        [HttpPut("UpdateOrderStatus/{orderId:int}")]
+        public async Task<ResponseDTO> UpdateOrderStatus(int orderId, [FromBody] string newStatus)
+        {
+            try
+            {
+                OrderHeader orderHeader = _dbContext.OrderHeaders.First(x => x.OrderHeaderID == orderId);
+                if (orderHeader != null)
+                {
+                    if(newStatus == SD.Status_Cancelled)
+                    {
+                        var options = new RefundCreateOptions
+                        {
+                            Reason = RefundReasons.RequestedByCustomer,
+                            PaymentIntent = orderHeader.PaymentIntentID
+                        };
+                        var service = new RefundService();
+                        Refund refund = service.Create(options);
+                    }
+                    orderHeader.Status = newStatus;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                _responseDTO.IsSuccess = false;
+                _responseDTO.Message = ex.Message;
+            }
+            return _responseDTO;
+        }
+
     }
 }

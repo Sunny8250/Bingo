@@ -33,7 +33,7 @@ namespace Mango.Services.AuthApi.Services
 				Audience = _jwtOptions.Audience,
 				Issuer = _jwtOptions.Issuer,
 				Subject = new ClaimsIdentity(claims),
-				Expires = DateTime.UtcNow.AddMinutes(5),
+				Expires = DateTime.UtcNow.AddMinutes(15),
 				SigningCredentials = credential
 			};
 

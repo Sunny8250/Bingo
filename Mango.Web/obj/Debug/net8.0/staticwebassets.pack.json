@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Mango.Web.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\css\\custom.css",
+      "PackagePath": "staticwebassets\\css\\custom.css"
+    },
+    {
       "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -19,6 +23,10 @@
     {
       "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\images\\order.PNG",
       "PackagePath": "staticwebassets\\images\\order.PNG"
+    },
+    {
+      "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\order.js",
+      "PackagePath": "staticwebassets\\js\\order.js"
     },
     {
       "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\site.js",

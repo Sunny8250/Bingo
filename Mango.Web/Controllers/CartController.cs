@@ -160,5 +160,31 @@ namespace Mango.Web.Controllers
             }
             return new CartDTO();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCartCount()
+        {
+            //TODO
+            //var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            //var response = await _cartService.GetCartItemsCountAsync(userId);
+            //int count = 0;
+            //if (response !=null && response.IsSuccess)
+            //{
+            //    count = JsonConvert.DeserializeObject<int>(Convert.ToString(response.Result));
+
+            //}
+            //return Ok(count);
+
+            var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            var response = await _cartService.GetCartByUserIdAsync(userId);
+            int count = 0;
+            if(response!=null && response.IsSuccess)
+            {
+                CartDTO cartDTO = JsonConvert.DeserializeObject<CartDTO>(Convert.ToString(response.Result));
+                count = cartDTO.CartDetails.Count();
+            }
+            return Ok(count);
+        }
+
     }
 }

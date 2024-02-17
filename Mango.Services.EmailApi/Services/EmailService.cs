@@ -20,7 +20,7 @@ namespace Mango.Services.EmailApi.Services
 		{
 			string message = $"<br/>New Order Placed <br/>OrderId: {orderConfirmation.OrderId} <br/>";
 
-			await LogAndEmail(orderConfirmation.ToString(), "ajoyr118@gmail.com");
+			await LogAndEmail(orderConfirmation.ToString(), orderConfirmation.Email);
 		}
 
 		//We cannot use registered DbContext here because dbContext is Scoped and EmailService is singleton, so to resolve this
