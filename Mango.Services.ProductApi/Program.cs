@@ -3,6 +3,7 @@ using Mango.Services.ProductApi.Data;
 using Mango.Services.ProductApi.Extensions;
 using Mango.Services.ProductApi.Models.DTO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

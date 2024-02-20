@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.PortableExecutable;
+using System.Linq;
 
 namespace Mango.Services.ShoppingCartApi.Controllers
 {
@@ -44,10 +45,18 @@ namespace Mango.Services.ShoppingCartApi.Controllers
                 {
                     CartHeader = _mapper.Map<CartHeaderDTO>(_dbContext.CartHeaders.First(x => x.UserID == userId)),
                 };
-                cart.CartDetails = _mapper.Map<IEnumerable<CartDetailsDTO>>
-                    (_dbContext.CartDetails.Where(x => x.CartHeaderID == cart.CartHeader.CartHeaderID));
 
-                var products = await _productService.GetProductsAsync();
+                // if admin removes any product, temp fix to handle from throwing exception.
+                //start
+				var products = await _productService.GetProductsAsync();
+                var cartDetails = _dbContext.CartDetails.Where(x => x.CartHeaderID == cart.CartHeader.CartHeaderID).ToList();
+
+                var joinCartDetailsWithProduct = from cd in cartDetails
+                                                   join p in products
+                                                   on cd.ProductID equals p.ProductID
+                                                   select cd;
+                //end
+				cart.CartDetails = _mapper.Map<IEnumerable<CartDetailsDTO>>(joinCartDetailsWithProduct);
                 
                 foreach (var item in cart.CartDetails)
                 {
@@ -144,6 +153,8 @@ namespace Mango.Services.ShoppingCartApi.Controllers
                     var cartHeaderToRemove = await _dbContext.CartHeaders
                         .FirstOrDefaultAsync(x => x.CartHeaderID == cartDetailsResult.CartHeaderID);
                     _dbContext.CartHeaders.Remove(cartHeaderToRemove);
+
+
                 }
                 await _dbContext.SaveChangesAsync(); 
                
@@ -201,12 +212,9 @@ namespace Mango.Services.ShoppingCartApi.Controllers
         //{
         //    try
         //    {
-        //        int count = await _dbContext.CartDetails
-        //        .FromSqlRaw("EXECUTE GetCartItemsCount @userId",
-        //        new SqlParameter("@userId", userId))
-        //        .AsNoTracking()
-        //        .CountAsync();
-        //        _responseDTO.Result = count;
+        //        var cartItems = await _dbContext.CartDetails
+        //        .FromSqlRaw("EXEC GetCartItemsCount {0}", userId).ToListAsync();
+        //        _responseDTO.Result = cartItems.Count;
         //    }
         //    catch(Exception ex)
         //    {

@@ -39,7 +39,7 @@ namespace Mango.Web.Controllers
                     var loginReponseDTO = JsonConvert.DeserializeObject<LoginReponseDTO>(Convert.ToString(loginResult.Result));
                     await SiginInUser(loginReponseDTO);
                     _tokenProvider.SetToken(loginReponseDTO.Token);
-                    TempData["success"] = "Login successful";
+                    TempData["success"] = $"Welcome back {loginReponseDTO.User.Name}";
                     return RedirectToAction("Index", "Home");
                 }
 				else

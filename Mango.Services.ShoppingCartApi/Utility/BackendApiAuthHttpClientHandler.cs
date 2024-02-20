@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace Mango.Services.ShoppingCartApi.Utility
 {
     //Delegating Handler is like .Net core middleware, the key difference is it will be on client side.
-    //When we make an http request usign http client we can leverage the delegating handler to pass out bearer token
+    //When we make an http request using http client we can leverage the delegating handler to pass out bearer token
     public class BackendApiAuthHttpClientHandler: DelegatingHandler
     {
         private readonly IHttpContextAccessor _contextAccessor;

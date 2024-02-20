@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "eKfLhz3vUuxKdItCASvldPJCq8aO9V5i99qzsPkszuw=",
+  "Hash": "fdEQdRp4Q4MeonFKNz1C9958PiXuBRJk7NSWHm/5zj8=",
   "Source": "Mango.Web",
   "BasePath": "_content/Mango.Web",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\order.PNG"
+    },
+    {
+      "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\cart.js",
+      "SourceId": "Mango.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\",
+      "BasePath": "_content/Mango.Web",
+      "RelativePath": "js/cart.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\cart.js"
     },
     {
       "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\order.js",

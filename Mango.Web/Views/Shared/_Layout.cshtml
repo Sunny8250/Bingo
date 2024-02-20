@@ -23,7 +23,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door-fill"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -69,7 +69,7 @@
                                 <a class="nav-link" href="#">Hello @User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
-                                <a id="logout" class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a>
+                                <a id="logout" class="nav-link" asp-controller="Auth" asp-action="Logout"><i class="bi bi-box-arrow-right"></i></a>
                             </li>
                         }
                     </ul>
@@ -95,42 +95,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
-        function updateCartCount() {
-            $.ajax({
-                url: '/Cart/GetCartCount', // This should be the URL of your endpoint to fetch cart count
-                type: 'GET',
-                success: function (response) {
-                    $('#cart-count').text(response); // Update the cart count in the span
-                    //localStorage.setItem('cartCount', response);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                    // Handle errors if any
-                }
-            });
-        }
-        
-        // // Function to retrieve and update the cart count
-        // function retrieveAndUpdateCartCount()
-        // {
-        //     var storedCartCount = localStorage.getItem('cartCount');
-        //     var logOutBtn = document.getElementById('logout');
-        //     if (storedCartCount != 0 && logOutBtn != null) {
-        //     $('#cart-count').text(storedCartCount); // Update the cart count in the span
-        //     }
-        //     else
-        //     {
-        //         localStorage.clear();
-        //         updateCartCount(); // Fetch and update the cart count
-        //     }
-        // }
-
-        // Call the function initially when the page loads
-        $(document).ready(function () {
-            updateCartCount();
-        });
-    </script>
-
+    <script src="~/js/cart.js"></script>
 </body>
 </html>

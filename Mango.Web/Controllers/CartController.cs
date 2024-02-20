@@ -64,8 +64,12 @@ namespace Mango.Web.Controllers
                     Response.Headers.Add("Location", stripeSession.StripeSessionUrl);
                     return new StatusCodeResult(303);
                 }
+                else
+                {
+					TempData["error"] = "Please apply valid coupon";
+				}
             }
-            return View();
+            return View(cartDTO);
         }
         [Authorize]
         public async Task<IActionResult> Confirmation(int orderId)
@@ -156,6 +160,19 @@ namespace Mango.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 CartDTO cartDto = JsonConvert.DeserializeObject<CartDTO>(Convert.ToString(response.Result));
+                if(!string.IsNullOrWhiteSpace(cartDto.CartHeader.CouponCode))
+                {
+                    var couponResponse = await _couponService.GetCouponAsync(cartDto.CartHeader.CouponCode);
+
+                    if(couponResponse != null && couponResponse.IsSuccess)
+                    {
+						var coupon = JsonConvert.DeserializeObject<CouponDTO>(couponResponse.Result.ToString());
+						if (!(cartDto.CartHeader.CartTotal >= coupon.MinAmount))
+						{
+							cartDto.CartHeader.CouponCode = string.Empty;
+						}
+					}
+                }
                 return cartDto;
             }
             return new CartDTO();
@@ -164,7 +181,7 @@ namespace Mango.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCartCount()
         {
-            //TODO
+            ////TODO
             //var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
             //var response = await _cartService.GetCartItemsCountAsync(userId);
             //int count = 0;

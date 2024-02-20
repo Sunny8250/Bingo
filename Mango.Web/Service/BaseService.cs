@@ -25,8 +25,14 @@ namespace Mango.Web.Service
                 //This line initializes a new instance of the HttpRequestMessage class, which represents an HTTP request.
                 //This object will be configured with various parameters before being sent to the API.
                 HttpRequestMessage message = new();
-                //This line adds an "Accept" header to the HTTP request, specifying that the client expects a JSON response from the API.
-                message.Headers.Add("Accept", "application/json");
+                //This line adds an "Accept" header to the HTTP request, specifying that the client expects a JSON/MutiFormData
+                //response from the API.
+                if(requestDTO.ContentType == ContentType.MultipartFormData)
+                {
+					message.Headers.Add("Accept", "*/*"); // */* means any media type and any sub type
+				}
+                else
+                    message.Headers.Add("Accept", "application/json");
 
                 //token
                 if(withBearer)
@@ -38,14 +44,32 @@ namespace Mango.Web.Service
 
 				}
                 
+                if(requestDTO.ContentType == ContentType.MultipartFormData)
+                {
+                    var content = new MultipartFormDataContent();
+                    foreach(var prop in requestDTO.Data.GetType().GetProperties())
+                    {
+                        var value = prop.GetValue(requestDTO.Data);
+                        if(value is FormFile)
+                        {
+                            var file = (FormFile)value;
+                            if(file != null)
+                            {
+                                content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+					if (requestDTO.Data != null)
+					{
+						message.Content = new StringContent(JsonConvert.SerializeObject(requestDTO.Data), Encoding.UTF8, "application/json");
+					}
+				}
 
                 message.RequestUri = new Uri(requestDTO.Url);
-                if(requestDTO.Data != null)
-                {
-                    message.Content = new StringContent(JsonConvert.SerializeObject(requestDTO.Data), Encoding.UTF8, "application/json");
-                }
                 
-
                 HttpResponseMessage? apiResponse = null;
 
                 switch (requestDTO.ApiType)

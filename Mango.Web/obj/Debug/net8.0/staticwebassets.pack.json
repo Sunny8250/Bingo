@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\images\\order.PNG"
     },
     {
+      "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\cart.js",
+      "PackagePath": "staticwebassets\\js\\cart.js"
+    },
+    {
       "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Web\\wwwroot\\js\\order.js",
       "PackagePath": "staticwebassets\\js\\order.js"
     },

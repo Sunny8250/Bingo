@@ -138,3 +138,4 @@ C:\Users\Sani\source\repos\BinGo\Mango.Services.ProductApi\obj\Debug\net8.0\refi
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ProductApi\obj\Debug\net8.0\Mango.Services.ProductApi.pdb
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ProductApi\obj\Debug\net8.0\Mango.Services.ProductApi.genruntimeconfig.cache
 C:\Users\Sani\source\repos\BinGo\Mango.Services.ProductApi\obj\Debug\net8.0\ref\Mango.Services.ProductApi.dll
+C:\Users\Sani\source\repos\BinGo\Mango.Services.ProductApi\bin\Debug\net8.0\Mango.Services.ProductApi.staticwebassets.runtime.json
