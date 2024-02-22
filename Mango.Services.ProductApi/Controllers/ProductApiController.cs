@@ -59,7 +59,7 @@ namespace Mango.Services.ProductApi.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ResponseDTO Create(AddProductDTO addProductDTO)
+        public ResponseDTO Create(AddProductDTO addProductDTO) //Here removed FromBody due to data was coming from body but got appended
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Mango.Services.ProductApi.Controllers
                         addProductDTO.Image.CopyTo(fileStream);
                     }
                     var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
-                    product.ImageUrl = baseUrl + "ProductImages/"+ filePath;
+                    product.ImageUrl = baseUrl + "ProductImages/"+ fileName;
                     product.ImageLocalPath = filePath;
                 }
                 else

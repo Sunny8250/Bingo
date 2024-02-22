@@ -99,7 +99,7 @@ namespace Mango.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> ApplyCoupon(CartDTO cartDTO, string couponCode=null)
+        public async Task<IActionResult> ApplyCoupon(CartDTO cartDTO, string? couponCode)
         {
             if(couponCode!=null)
             {
@@ -160,19 +160,7 @@ namespace Mango.Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 CartDTO cartDto = JsonConvert.DeserializeObject<CartDTO>(Convert.ToString(response.Result));
-                if(!string.IsNullOrWhiteSpace(cartDto.CartHeader.CouponCode))
-                {
-                    var couponResponse = await _couponService.GetCouponAsync(cartDto.CartHeader.CouponCode);
-
-                    if(couponResponse != null && couponResponse.IsSuccess)
-                    {
-						var coupon = JsonConvert.DeserializeObject<CouponDTO>(couponResponse.Result.ToString());
-						if (!(cartDto.CartHeader.CartTotal >= coupon.MinAmount))
-						{
-							cartDto.CartHeader.CouponCode = string.Empty;
-						}
-					}
-                }
+     
                 return cartDto;
             }
             return new CartDTO();
@@ -181,24 +169,14 @@ namespace Mango.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCartCount()
         {
-            ////TODO
-            //var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
-            //var response = await _cartService.GetCartItemsCountAsync(userId);
-            //int count = 0;
-            //if (response !=null && response.IsSuccess)
-            //{
-            //    count = JsonConvert.DeserializeObject<int>(Convert.ToString(response.Result));
-
-            //}
-            //return Ok(count);
-
+            //TODO
             var userId = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
-            var response = await _cartService.GetCartByUserIdAsync(userId);
+            var response = await _cartService.GetCartItemsCountAsync(userId);
             int count = 0;
-            if(response!=null && response.IsSuccess)
+            if (response !=null && response.IsSuccess)
             {
-                CartDTO cartDTO = JsonConvert.DeserializeObject<CartDTO>(Convert.ToString(response.Result));
-                count = cartDTO.CartDetails.Count();
+                count = JsonConvert.DeserializeObject<int>(Convert.ToString(response.Result));
+
             }
             return Ok(count);
         }

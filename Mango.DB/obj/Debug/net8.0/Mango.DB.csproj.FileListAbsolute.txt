@@ -1,0 +1,15 @@
+C:\Users\Sani\source\repos\BinGo\Mango.DB\bin\Debug\net8.0\Mango.DB.deps.json
+C:\Users\Sani\source\repos\BinGo\Mango.DB\bin\Debug\net8.0\Mango.DB.runtimeconfig.json
+C:\Users\Sani\source\repos\BinGo\Mango.DB\bin\Debug\net8.0\Mango.DB.dll
+C:\Users\Sani\source\repos\BinGo\Mango.DB\bin\Debug\net8.0\Mango.DB.pdb
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.csproj.AssemblyReference.cache
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.AssemblyInfoInputs.cache
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.AssemblyInfo.cs
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.csproj.CoreCompileInputs.cache
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.sourcelink.json
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.dll
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\refint\Mango.DB.dll
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.pdb
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\Mango.DB.genruntimeconfig.cache
+C:\Users\Sani\source\repos\BinGo\Mango.DB\obj\Debug\net8.0\ref\Mango.DB.dll

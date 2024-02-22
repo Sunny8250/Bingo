@@ -7,6 +7,7 @@ using Mango.Services.ShoppingCartApi.Services;
 using Mango.Services.ShoppingCartApi.Services.IService;
 using Mango.Services.ShoppingCartApi.Utility;
 using Microsoft.EntityFrameworkCore;
+using Mango.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 

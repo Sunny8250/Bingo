@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
+using Mango.DB;
 using Mango.MessageBus;
 using Mango.Services.ShoppingCartApi.Data;
 using Mango.Services.ShoppingCartApi.Models;
 using Mango.Services.ShoppingCartApi.Models.DTO;
 using Mango.Services.ShoppingCartApi.Services.IService;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.PortableExecutable;
-using System.Linq;
+using System.Data;
 
 namespace Mango.Services.ShoppingCartApi.Controllers
 {
@@ -25,6 +23,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
         private readonly ICouponService _couponService;
         private readonly IMessageBus _messageBus;
         private readonly IConfiguration _configuration;
+        private readonly DataService _dataService;
         public CartApiController(IMapper mapper, AppDbContext dbContext, IProductService productService,
             ICouponService couponService, IMessageBus messageBus, IConfiguration configuration)
         {
@@ -35,6 +34,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             _couponService = couponService;
             _messageBus = messageBus;
             _configuration = configuration;
+            _dataService = new DataService(dbContext);
         }
         [HttpGet("GetCartById/{userId}")]
         public async Task<ResponseDTO> GetCartById(string userId)
@@ -70,6 +70,10 @@ namespace Mango.Services.ShoppingCartApi.Controllers
                     {
                         cart.CartHeader.CartTotal -= coupon.DiscountAmount;
                         cart.CartHeader.Discount = coupon.DiscountAmount;
+                    }
+                    else
+                    {
+                        cart.CartHeader.CouponCode = null;
                     }
                 }
                 _responseDTO.Result = cart;
@@ -144,6 +148,7 @@ namespace Mango.Services.ShoppingCartApi.Controllers
             {
                 var cartDetailsResult = _dbContext.CartDetails.First(x => x.CartDetailsID == cartDetailsId);
                 int totalCartItemsCount = _dbContext.CartDetails.Count(x => x.CartHeaderID == cartDetailsResult.CartHeaderID);
+
                 //CartDetails to remove
                 _dbContext.CartDetails.Remove(cartDetailsResult);
                 
@@ -207,21 +212,26 @@ namespace Mango.Services.ShoppingCartApi.Controllers
         }
 
         //TODO
-        //[HttpGet("GetCartItemsCount/{userId}")]
-        //public async Task<ResponseDTO> GetCartItemsCount(string userId)
-        //{
-        //    try
-        //    {
-        //        var cartItems = await _dbContext.CartDetails
-        //        .FromSqlRaw("EXEC GetCartItemsCount {0}", userId).ToListAsync();
-        //        _responseDTO.Result = cartItems.Count;
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        _responseDTO.Message = ex.Message.ToString();
-        //        _responseDTO.IsSuccess = false;
-        //    }
-        //    return _responseDTO;
-        //}
+        [HttpGet("GetCartItemsCount/{userId}")]
+        public async Task<ResponseDTO> GetCartItemsCount(string userId)
+        {
+            try
+            {
+                var queryparam = new SqlParameter("@userId", userId);
+                var products = await _dataService.Execute("GetCartItemsCount", queryparam, CommandType.StoredProcedure);
+
+                // Extract the ProductId column from the DataTable
+                var productIds = products.AsEnumerable()
+                                           .Select(row => row.Field<int>("ProductId"))
+                                           .ToList();
+                _responseDTO.Result = productIds.Count;
+            }
+            catch(Exception ex)
+            {
+                _responseDTO.Message = ex.Message.ToString();
+                _responseDTO.IsSuccess = false;
+            }
+            return _responseDTO;
+        }
     }
 }

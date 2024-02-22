@@ -1,9 +1,10 @@
 
 // Call the function initially when the page loads
 $(document).ready(function () {
-    updateCartCount();
+    getCartCount();
+    /*removeCartItem();*/
 });
-function updateCartCount() {
+function getCartCount() {
     $.ajax({
         url: '/Cart/GetCartCount', // This should be the URL of your endpoint to fetch cart count
         type: 'GET',
@@ -17,6 +18,42 @@ function updateCartCount() {
         }
     });
 }
+
+//function removeCartItem() {
+//    $('.remove-cart-item').click(function () {
+//        var cartDetailsId = $(this).attr('cartDetailsId');
+//        var cartDTO = $(this).attr('model');
+//        console.log(this);
+//        var $clickedButton = $(this);
+
+//        //Make the Ajax call
+//        $.ajax({
+//            url: '/Cart/Remove',
+//            type: 'POST',
+//            data: {
+//                cartDetailsId: cartDetailsId,
+//                cartDTO: cartDTO
+//            },
+//            success: function (response) {
+//                if (response.isSuccess) {
+//                    // Update the UI (remove the cart item from the view)
+//                    $clickedButton.closest('.cart-item').remove();
+//                    // Show success message (if needed)
+//                    alert("Cart item removed successfully.");
+//                } else {
+//                    // Show error message (if needed)
+//                    alert("Failed to remove cart item.");
+//                }
+//            },
+//            error: function (xhr, status, error) {
+//                // Handle error response
+//                console.error(xhr.responseText);
+//                // Show error message (if needed)
+//                alert("Error occurred while removing cart item.");
+//            }
+//        });
+//    });
+//}
 
 // // Function to retrieve and update the cart count
 // function retrieveAndUpdateCartCount()

@@ -74,12 +74,12 @@ namespace Mango.Services.OrderApi.Controllers
                     SuccessUrl = stripeRequestDTO.ApprovedUrl,
                     CancelUrl = stripeRequestDTO.CancelUrl,
                     LineItems = new List<SessionLineItemOptions>(),
-                    Mode = "payment",
-                    Discounts = new List<SessionDiscountOptions>()
+                    Mode = "payment"
                 };
                 if(stripeRequestDTO.OrderHeaderDTO.Discount > 0)
                 {
-                    options.Discounts.Add(new SessionDiscountOptions { Coupon = stripeRequestDTO.OrderHeaderDTO.CouponCode });
+                    var discounts = new SessionDiscountOptions { Coupon = stripeRequestDTO.OrderHeaderDTO.CouponCode };
+                    options.Discounts = new List<SessionDiscountOptions> { discounts };
                 }
                 foreach (var lineitem in stripeRequestDTO.OrderHeaderDTO.OrderDetails)
                 {

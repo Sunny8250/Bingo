@@ -1,1 +1,1 @@
-{"ContentRoots":["C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\"],"Root":{"Children":null,"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+{"ContentRoots":["C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\"],"Root":{"Children":{"ProductImages":{"Children":{"5001.jpg":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"ProductImages/5001.jpg"},"Patterns":null}},"Asset":null,"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}

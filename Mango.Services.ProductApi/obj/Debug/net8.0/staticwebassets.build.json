@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TvyjJkKTBCqoGgQqU+Ic5g4fFDNc1JgC/61s0KDMecY=",
+  "Hash": "UYxBEeamXr/Xzqr9NbXdDm881Gr5I+CkzqcDrJNCLFQ=",
   "Source": "Mango.Services.ProductApi",
   "BasePath": "_content/Mango.Services.ProductApi",
   "Mode": "Default",
@@ -15,5 +15,25 @@
       "Pattern": "**"
     }
   ],
-  "Assets": []
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\ProductImages\\5001.jpg",
+      "SourceId": "Mango.Services.ProductApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\",
+      "BasePath": "_content/Mango.Services.ProductApi",
+      "RelativePath": "ProductImages/5001.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ProductImages\\5001.jpg"
+    }
+  ]
 }
