@@ -6,6 +6,7 @@ using Mango.Services.ProductApi.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Mango.Services.ProductApi.Controllers
 {
@@ -16,11 +17,14 @@ namespace Mango.Services.ProductApi.Controllers
         private readonly AppDbContext _dbContext;
         private readonly ResponseDTO _response;
         private readonly IMapper _mapper;
-        public ProductApiController(AppDbContext dbContext, IMapper mapper)
+		private readonly IHttpContextAccessor _httpContextAccessor;
+
+		public ProductApiController(AppDbContext dbContext, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _mapper = mapper;
-            _response = new ResponseDTO();
+			_httpContextAccessor = httpContextAccessor;
+			_response = new ResponseDTO();
         }
 
         [HttpGet]
@@ -69,16 +73,20 @@ namespace Mango.Services.ProductApi.Controllers
 
                 if(addProductDTO.Image != null)
                 {
-                    string fileName = product.ProductID + Path.GetExtension(addProductDTO.Image.FileName);
-                    string filePath = @"wwwroot\ProductImages\" + fileName;
-                    var filePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), filePath);
-                    using (var fileStream  = new FileStream(filePathDirectory, FileMode.Create))
-                    {
-                        addProductDTO.Image.CopyTo(fileStream);
-                    }
-                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
-                    product.ImageUrl = baseUrl + "ProductImages/"+ fileName;
-                    product.ImageLocalPath = filePath;
+                    var fileName = addProductDTO.Image.FileName;
+                    var fileExtension = Path.GetExtension(addProductDTO.Image.FileName); 
+					var localFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images", $"{fileName}{fileExtension}");
+					//Reads the FileStream for this localPath and knows to create a file
+					//Upload image to localPath
+					using var stream = new FileStream(localFilePath, FileMode.Create);
+					addProductDTO.Image.CopyTo(stream);
+
+					//Here we cannot just simply pass path like C:\users\.... instead
+					//https://localhost:1234/images/filename.jpg here https is the scheme localhost is the host and port is the pathbase
+
+					var urlFilePath = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/Images/{fileName}{fileExtension}";
+					product.ImageUrl = urlFilePath;
+                    product.ImageLocalPath = localFilePath;
                 }
                 else
                 {
@@ -98,12 +106,42 @@ namespace Mango.Services.ProductApi.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Admin")]
-		public ResponseDTO Update([FromBody] UpdateProductDTO updateProductDTO)
+		public ResponseDTO Update(UpdateProductDTO updateProductDTO)
         {
             try
             {
                 var product = _mapper.Map<Product>(updateProductDTO);
-                _dbContext.Products.Update(product);
+
+				if (!string.IsNullOrEmpty(product.ImageLocalPath))
+				{
+					var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
+					FileInfo file = new FileInfo(oldFilePath);
+					if (file.Exists)
+					{
+						file.Delete();
+					}
+				}
+
+				if (updateProductDTO.Image != null)
+				{
+					var fileName = updateProductDTO.Image.FileName;
+					var fileExtension = Path.GetExtension(updateProductDTO.Image.FileName);
+					var localFilePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images", $"{fileName}{fileExtension}");
+					//Reads the FileStream for this localPath and knows to create a file
+					//Upload image to localPath
+					using var stream = new FileStream(localFilePath, FileMode.Create);
+					updateProductDTO.Image.CopyToAsync(stream);
+
+					//Here we cannot just simply pass path like C:\users\.... instead
+					//https://localhost:1234/images/filename.jpg here https is the scheme localhost is the host and port is the pathbase
+
+					var urlFilePath = $"{_httpContextAccessor.HttpContext.Request.Scheme}://{_httpContextAccessor.HttpContext.Request.Host}{_httpContextAccessor.HttpContext.Request.PathBase}/Images/{fileName}{fileExtension}";
+					product.ImageUrl = urlFilePath;
+					product.ImageLocalPath = localFilePath;
+				}
+
+
+				_dbContext.Products.Update(product);
                 _dbContext.SaveChanges();
 
                 _response.Result = _mapper.Map<ProductDTO>(product);
@@ -124,6 +162,15 @@ namespace Mango.Services.ProductApi.Controllers
             try
             {
                 var product = _dbContext.Products.First(x => x.ProductID == id);
+                if(!string.IsNullOrEmpty(product.ImageLocalPath))
+                {
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), product.ImageLocalPath);
+                    FileInfo file = new FileInfo(oldFilePath);
+                    if(file.Exists)
+                    {
+                        file.Delete();
+                    }
+                }
                 _dbContext.Products.Remove(product);
                 _dbContext.SaveChanges();
                 var couponDTO = _mapper.Map<ProductDTO>(product);

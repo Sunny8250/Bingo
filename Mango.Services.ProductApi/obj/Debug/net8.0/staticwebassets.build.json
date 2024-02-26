@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UYxBEeamXr/Xzqr9NbXdDm881Gr5I+CkzqcDrJNCLFQ=",
+  "Hash": "22Y+oXVcz8jrz12kfSW4dEmZGac74lCdoKa2PjvgN7A=",
   "Source": "Mango.Services.ProductApi",
   "BasePath": "_content/Mango.Services.ProductApi",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\ProductImages\\5001.jpg",
+      "Identity": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\Images\\Jalebi.jpg.jpg",
       "SourceId": "Mango.Services.ProductApi",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\",
       "BasePath": "_content/Mango.Services.ProductApi",
-      "RelativePath": "ProductImages/5001.jpg",
+      "RelativePath": "Images/Jalebi.jpg.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -33,7 +33,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\ProductImages\\5001.jpg"
+      "OriginalItemSpec": "wwwroot\\Images\\Jalebi.jpg.jpg"
     }
   ]
 }

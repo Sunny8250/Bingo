@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\ProductImages\\5001.jpg",
-      "PackagePath": "staticwebassets\\ProductImages\\5001.jpg"
+      "Id": "C:\\Users\\Sani\\source\\repos\\BinGo\\Mango.Services.ProductApi\\wwwroot\\Images\\Jalebi.jpg.jpg",
+      "PackagePath": "staticwebassets\\Images\\Jalebi.jpg.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Mango.Services.ProductApi.Microsoft.AspNetCore.StaticWebAssets.props",
