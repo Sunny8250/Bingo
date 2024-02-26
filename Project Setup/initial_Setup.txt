@@ -1,0 +1,42 @@
+1. Open Project in VS 2022
+	.Net 8.0 is required
+
+2. Run the migration files.
+
+3. Create a stored Procedure in Sql server for following script:-
+	
+USE [Mango_ShoppingCart]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetCartItemsCount]    Script Date: 2/26/2024 9:58:02 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		<Author,,Ajoy>
+-- Create date: <2/12/2024>
+-- Description:	<get total no of items from cart using userid>
+-- =============================================
+CREATE PROCEDURE [dbo].[GetCartItemsCount]
+	-- Add the parameters for the stored procedure here
+	@userId nvarchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Select statements for procedure here
+	SELECT cd.ProductId
+    FROM dbo.CartDetails cd
+    JOIN dbo.CartHeaders ch ON cd.CartHeaderId = ch.CartHeaderId
+    JOIN [Mango_Product].[dbo].[Products] p ON cd.ProductId = p.ProductID
+    WHERE ch.UserId=@userId
+
+END
+GO
+
+
